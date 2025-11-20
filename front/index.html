@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Blog Main List</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- 상단 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#" class="nav-logo">🎵 Music Blog</a>
+                <a href="#" class="nav-link">홈</a>
+                <a href="#" class="nav-link">전체 목록</a>
+                <a href="#" class="nav-link">플레이리스트</a>
+                <a href="#" class="nav-link">태그</a>
+            </div>
+            <div class="nav-right">
+                <div class="profile" onclick="toggleDropdown()">
+                    <img src="https://via.placeholder.com/40" alt="프로필" class="profile-img">
+                    <span class="profile-name">사용자</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item">마이페이지</a>
+                    <a href="#" class="dropdown-item">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <h1>🎵 나의 음악 기록</h1>
+
+        <!-- 목록 카드 그리드 -->
+        <div class="grid">
+
+            <!-- 카드 1 -->
+            <div class="card">
+                <div class="thumb"
+                    style="background-image:url('https://i.scdn.co/image/ab67616d0000b273d9e3b5a1b2eacae4ed52a4d6');">
+                </div>
+                <div class="info">
+                    <p class="title card-title">Love wins all</p>
+                    <p class="artist">아이유 (IU)</p>
+                    <p class="preview card-desc">하루를 마무리할 때 들으면 마음이 편안해지는 곡하루를 마무리할 때 들으면 마음이 편안해지는 곡하루를 마무리할 때 들으면 마음이 편안해지는 곡하루를 마무리할 때 들으면 마음이 편안해지는 곡</p>
+                    <div class="tags">
+                        <span>#새벽감성</span>
+                        <span>#위로</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 카드 2 -->
+            <div class="card">
+                <div class="thumb"
+                    style="background-image:url('https://i.scdn.co/image/ab67616d0000b2738a4fb52ffb0a2c1e090d1dcb');">
+                </div>
+                <div class="info">
+                    <p class="title card-title">OMG</p>
+                    <p class="artist">NewJeans</p>
+                    <p class="preview card-desc">중독성 강한 리듬과 몽환적인 보컬 조합이 매력적이다…</p>
+                    <div class="tags">
+                        <span>#중독성</span>
+                        <span>#팝</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 카드 3 -->
+            <div class="card">
+                <div class="thumb"
+                    style="background-image:url('https://i.scdn.co/image/ab67616d0000b273c6dbea2635ee11ad1ed1e9dc');">
+                </div>
+                <div class="info">
+                    <p class="title card-title">Hypeboy</p>
+                    <p class="artist">NewJeans</p>
+                    <p class="preview card-desc">듣기만 해도 설레는 느낌. 청량함이 가득한 트랙…</p>
+                    <div class="tags">
+                        <span>#설렘</span>
+                        <span>#청량</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 카드 4 -->
+            <div class="card">
+                <div class="thumb"
+                    style="background-image:url('https://i.scdn.co/image/ab67616d0000b2734d1431dfcf45ae19a1e012cd');">
+                </div>
+                <div class="info">
+                    <p class="title card-title">Ditto</p>
+                    <p class="artist">NewJeans</p>
+                    <p class="preview card-desc">추억과 그리움이 동시에 스며드는 감정적인 곡…</p>
+                    <div class="tags">
+                        <span>#추억</span>
+                        <span>#감성</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('profileDropdown');
+        dropdown.classList.toggle('show');
+    }
+
+    // 드롭다운 외부 클릭 시 닫기
+    document.addEventListener('click', function(event) {
+        const profile = document.querySelector('.profile');
+        const dropdown = document.getElementById('profileDropdown');
+        
+        if (!profile.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+</script>
+
+</html>

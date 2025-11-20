@@ -1,0 +1,243 @@
+body {
+            margin: 0;
+            font-family: 'Pretendard', sans-serif;
+            background: #f6f7fb;
+            color: #222;
+            padding-top: 70px;
+        }
+
+        /* 상단 네비게이션 바 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #222;
+            margin-right: 12px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #4f46e5;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: background 0.2s ease;
+        }
+
+        .profile:hover {
+            background: #f6f7fb;
+        }
+
+        .profile-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #222;
+        }
+
+        .arrow {
+            font-size: 10px;
+            color: #888;
+            transition: transform 0.2s ease;
+        }
+
+        .profile:hover .arrow {
+            transform: translateY(2px);
+        }
+
+        /* 드롭다운 메뉴 */
+        .dropdown {
+            position: absolute;
+            top: 55px;
+            right: 24px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .dropdown-item:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .dropdown-item:last-child {
+            border-radius: 0 0 12px 12px;
+        }
+
+        .dropdown-item:hover {
+            background: #f6f7fb;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* 헤더 */
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        /* 카드 그리드 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        /* 카드 */
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 카드 내 이미지 */
+        .thumb {
+            width: 100%;
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+
+        /* 카드 텍스트 */
+        .info {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .title {
+            font-size: 18px;
+            margin: 0 0 6px;
+            font-weight: 600;
+        }
+
+        .artist {
+            font-size: 14px;
+            color: #555;
+            margin: 0 0 10px;
+        }
+
+        .preview {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            margin: 0 0 12px;
+            flex-grow: 1;
+        }
+
+        /* 태그 */
+        .tags {
+            margin-top: auto;
+        }
+
+        .tags span {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 12px;
+            margin-right: 6px;
+            background: #eef1ff;
+            border-radius: 12px;
+        }
+
+        /* 제목 말줄임 처리 */
+        .card-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 설명 2줄 말줄임 처리 */
+        .card-desc {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+        }
