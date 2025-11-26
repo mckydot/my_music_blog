@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Blog Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <div class="logo-icon">🎵</div>
+            <h1 class="logo-text">Music Blog</h1>
+            <p class="logo-subtitle">나만의 음악 기록 공간</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            이메일 또는 비밀번호가 올바르지 않습니다.
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="email">이메일</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    class="form-input" 
+                    placeholder="example@email.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">비밀번호</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    class="form-input" 
+                    placeholder="비밀번호를 입력하세요"
+                    required
+                >
+            </div>
+
+            <div class="form-options">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">로그인 상태 유지</label>
+                </div>
+                <a href="#" class="forgot-password">비밀번호 찾기</a>
+            </div>
+
+            <button type="submit" class="btn-login">로그인</button>
+        </form>
+
+        <div class="signup-link">
+            아직 계정이 없으신가요? <a href="#">회원가입</a>
+        </div>
+    </div>
+
+    <script src="js/loginPage.js"></script>
+</body>
+
+</html>
