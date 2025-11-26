@@ -35,95 +35,127 @@
 
     <div class="container">
 
-        <h1>🎵 나의 음악 기록</h1>
-
-        <!-- 목록 카드 그리드 -->
-        <div class="grid">
-
-            <!-- 카드 1 -->
-            <div class="card">
-                <div class="thumb"
-                    style="background-image:url('https://i.scdn.co/image/ab67616d0000b273d9e3b5a1b2eacae4ed52a4d6');">
-                </div>
-                <div class="info">
-                    <p class="title card-title">Love wins all</p>
-                    <p class="artist">아이유 (IU)</p>
-                    <p class="preview card-desc">하루를 마무리할 때 들으면 마음이 편안해지는 곡하루를 마무리할 때 들으면 마음이 편안해지는 곡하루를 마무리할 때 들으면 마음이 편안해지는 곡하루를 마무리할 때 들으면 마음이 편안해지는 곡</p>
-                    <div class="tags">
-                        <span>#새벽감성</span>
-                        <span>#위로</span>
-                    </div>
-                </div>
+        <!-- 사이드바 -->
+        <aside class="sidebar">
+            <div class="sidebar-search">
+                <input type="text" placeholder="아티스트 검색..." class="search-input">
             </div>
 
-            <!-- 카드 2 -->
-            <div class="card">
-                <div class="thumb"
-                    style="background-image:url('https://i.scdn.co/image/ab67616d0000b2738a4fb52ffb0a2c1e090d1dcb');">
-                </div>
-                <div class="info">
-                    <p class="title card-title">OMG</p>
-                    <p class="artist">NewJeans</p>
-                    <p class="preview card-desc">중독성 강한 리듬과 몽환적인 보컬 조합이 매력적이다…</p>
-                    <div class="tags">
-                        <span>#중독성</span>
-                        <span>#팝</span>
-                    </div>
-                </div>
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">관심 아티스트</h3>
+                <ul class="artist-list">
+                    <li class="artist-item active">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273d9e3b5a1b2eacae4ed52a4d6" alt="IU"
+                            class="artist-thumb">
+                        <span class="artist-name">아이유 (IU)</span>
+                    </li>
+                    <li class="artist-item">
+                        <img src="https://i.scdn.co/image/ab67616d0000b2738a4fb52ffb0a2c1e090d1dcb" alt="NewJeans"
+                            class="artist-thumb">
+                        <span class="artist-name">NewJeans</span>
+                    </li>
+                    <li class="artist-item">
+                        <img src="https://via.placeholder.com/40" alt="BTS" class="artist-thumb">
+                        <span class="artist-name">BTS</span>
+                    </li>
+                    <li class="artist-item">
+                        <img src="https://via.placeholder.com/40" alt="AKMU" class="artist-thumb">
+                        <span class="artist-name">악동뮤지션</span>
+                    </li>
+                    <li class="artist-item">
+                        <img src="https://via.placeholder.com/40" alt="IVE" class="artist-thumb">
+                        <span class="artist-name">IVE</span>
+                    </li>
+                </ul>
             </div>
 
-            <!-- 카드 3 -->
-            <div class="card">
-                <div class="thumb"
-                    style="background-image:url('https://i.scdn.co/image/ab67616d0000b273c6dbea2635ee11ad1ed1e9dc');">
-                </div>
-                <div class="info">
-                    <p class="title card-title">Hypeboy</p>
-                    <p class="artist">NewJeans</p>
-                    <p class="preview card-desc">듣기만 해도 설레는 느낌. 청량함이 가득한 트랙…</p>
-                    <div class="tags">
-                        <span>#설렘</span>
-                        <span>#청량</span>
-                    </div>
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">인기 태그</h3>
+                <div class="popular-tags">
+                    <span class="tag-item">#발라드</span>
+                    <span class="tag-item">#팝</span>
+                    <span class="tag-item">#힙합</span>
+                    <span class="tag-item">#R&B</span>
+                    <span class="tag-item">#인디</span>
+                    <span class="tag-item">#감성</span>
                 </div>
             </div>
+        </aside>
 
-            <!-- 카드 4 -->
-            <div class="card">
-                <div class="thumb"
-                    style="background-image:url('https://i.scdn.co/image/ab67616d0000b2734d1431dfcf45ae19a1e012cd');">
-                </div>
-                <div class="info">
-                    <p class="title card-title">Ditto</p>
-                    <p class="artist">NewJeans</p>
-                    <p class="preview card-desc">추억과 그리움이 동시에 스며드는 감정적인 곡…</p>
-                    <div class="tags">
-                        <span>#추억</span>
-                        <span>#감성</span>
+        <main class="main-content">
+            <h1>🎵 나의 음악 기록</h1>
+
+            <!-- 목록 카드 그리드 -->
+            <div class="grid">
+
+                <!-- 카드 1 -->
+                <div class="card">
+                    <div class="thumb"
+                        style="background-image:url('https://i.scdn.co/image/ab67616d0000b273d9e3b5a1b2eacae4ed52a4d6');">
+                    </div>
+                    <div class="info">
+                        <p class="title card-title">Love wins all</p>
+                        <p class="artist">아이유 (IU)</p>
+                        <p class="preview card-desc">하루를 마무리할 때 들으면 마음이 편안해지는 곡하루를 마무리할 때 들으면 마음이 편안해지는 곡하루를 마무리할 때 들으면
+                            마음이 편안해지는 곡하루를 마무리할 때 들으면 마음이 편안해지는 곡</p>
+                        <div class="tags">
+                            <span>#새벽감성</span>
+                            <span>#위로</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+                <!-- 카드 2 -->
+                <div class="card">
+                    <div class="thumb"
+                        style="background-image:url('https://i.scdn.co/image/ab67616d0000b2738a4fb52ffb0a2c1e090d1dcb');">
+                    </div>
+                    <div class="info">
+                        <p class="title card-title">OMG</p>
+                        <p class="artist">NewJeans</p>
+                        <p class="preview card-desc">중독성 강한 리듬과 몽환적인 보컬 조합이 매력적이다…</p>
+                        <div class="tags">
+                            <span>#중독성</span>
+                            <span>#팝</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 카드 3 -->
+                <div class="card">
+                    <div class="thumb"
+                        style="background-image:url('https://i.scdn.co/image/ab67616d0000b273c6dbea2635ee11ad1ed1e9dc');">
+                    </div>
+                    <div class="info">
+                        <p class="title card-title">Hypeboy</p>
+                        <p class="artist">NewJeans</p>
+                        <p class="preview card-desc">듣기만 해도 설레는 느낌. 청량함이 가득한 트랙…</p>
+                        <div class="tags">
+                            <span>#설렘</span>
+                            <span>#청량</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 카드 4 -->
+                <div class="card">
+                    <div class="thumb"
+                        style="background-image:url('https://i.scdn.co/image/ab67616d0000b2734d1431dfcf45ae19a1e012cd');">
+                    </div>
+                    <div class="info">
+                        <p class="title card-title">Ditto</p>
+                        <p class="artist">NewJeans</p>
+                        <p class="preview card-desc">추억과 그리움이 동시에 스며드는 감정적인 곡…</p>
+                        <div class="tags">
+                            <span>#추억</span>
+                            <span>#감성</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
 
     </div>
 </body>
-
-<script>
-    function toggleDropdown() {
-        const dropdown = document.getElementById('profileDropdown');
-        dropdown.classList.toggle('show');
-    }
-
-    // 드롭다운 외부 클릭 시 닫기
-    document.addEventListener('click', function(event) {
-        const profile = document.querySelector('.profile');
-        const dropdown = document.getElementById('profileDropdown');
-        
-        if (!profile.contains(event.target) && !dropdown.contains(event.target)) {
-            dropdown.classList.remove('show');
-        }
-    });
-</script>
-
 </html>
