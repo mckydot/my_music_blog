@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노래 리뷰 작성</title>
+    <link rel="stylesheet" href="css/write.css">
+</head>
+
+<body>
+
+    <!-- 상단 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="nav-logo">🎵 Music Blog</a>
+                <a href="index.html" class="nav-link">홈</a>
+                <a href="#" class="nav-link">글쓰기</a>
+                <a href="#" class="nav-link">글 수정</a>
+                <a href="#" class="nav-link">태그 관리</a>
+            </div>
+
+            <div class="nav-right">
+                <div class="profile" onclick="toggleDropdown()">
+                    <img src="https://via.placeholder.com/40" class="profile-img">
+                    <span class="profile-name">사용자</span>
+                    <span class="arrow">▼</span>
+                </div>
+
+                <div class="dropdown" id="profileDropdown">
+                    <a href="#" class="dropdown-item">마이페이지</a>
+                    <a href="#" class="dropdown-item">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 🔥 사이드바 + 메인 콘텐츠를 감싸는 레이아웃 -->
+    <div class="layout">
+
+        <!-- 사이드바 -->
+        <aside class="sidebar">
+            <div class="sidebar-search">
+                <input type="text" placeholder="아티스트 검색..." class="search-input">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">관심 아티스트</h3>
+                <ul class="artist-list">
+                    <li class="artist-item active">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273d9e3b5a1b2eacae4ed52a4d6" class="artist-thumb">
+                        <span class="artist-name">Metallica</span>
+                    </li>
+
+                    <li class="artist-item">
+                        <img src="https://i.scdn.co/image/ab67616d0000b2738a4fb52ffb0a2c1e090d1dcb" class="artist-thumb">
+                        <span class="artist-name">Scorpions</span>
+                    </li>
+
+                    <li class="artist-item">
+                        <img src="https://via.placeholder.com/40" class="artist-thumb">
+                        <span class="artist-name">Skid Row</span>
+                    </li>
+
+                    <li class="artist-item">
+                        <img src="https://via.placeholder.com/40" class="artist-thumb">
+                        <span class="artist-name">X-Japan</span>
+                    </li>
+
+                    <li class="artist-item">
+                        <img src="https://via.placeholder.com/40" class="artist-thumb">
+                        <span class="artist-name">Queen</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">인기 태그</h3>
+                <div class="popular-tags">
+                    <span class="tag-item">#락</span>
+                    <span class="tag-item">#메탈</span>
+                    <span class="tag-item">#하드락</span>
+                    <span class="tag-item">#인디</span>
+                    <span class="tag-item">#감성</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="main-content">
+
+            <h1 class="page-title">🎵 노래 리뷰 작성</h1>
+
+            <!-- 검색 -->
+            <div class="search-section">
+                <label class="label">노래 검색</label>
+                <div class="search-input-wrapper">
+                    <input type="text" id="music-search" placeholder="유튜브 뮤직에서 노래 검색...">
+                    <button class="search-btn">검색</button>
+                </div>
+
+                <div id="search-results" class="search-results"></div>
+            </div>
+
+            <!-- 선택된 노래 -->
+            <div class="selected-song" id="selected-song">
+                <p class="placeholder">🔎 노래를 검색해서 선택하세요.</p>
+            </div>
+
+            <!-- 리뷰 내용 -->
+            <div class="form-section">
+                <label class="label">리뷰 내용</label>
+                <textarea id="content" placeholder="노래에 대한 감상을 자유롭게 작성하세요."></textarea>
+            </div>
+
+            <!-- 태그 -->
+            <div class="form-section">
+                <label class="label">태그</label>
+                <div class="tag-input-wrapper">
+                    <input type="text" id="tag-input" placeholder="태그 입력 후 Enter">
+                    <button class="tag-add-btn">추가</button>
+                </div>
+
+                <div class="tag-list" id="tag-list"></div>
+            </div>
+
+            <button class="submit-btn">작성 완료</button>
+
+        </main>
+
+    </div> <!-- END layout -->
+
+    <script src="js/write.js"></script>
+</body>
+</html>
