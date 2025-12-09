@@ -64,6 +64,53 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const pool = await connect();  // 🔥 db.connect → connect 로 수정
+
+        // 이메일 확인
+        const result = await pool.request()
+            .input("email", sql.VarChar, email)  // 🔥 db.sql → sql 로 수정
+            .query("SELECT * FROM users WHERE email = @email");
+
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const user = result.recordset[0];
+
+        // 비밀번호 확인
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ error: "Invalid password" });
+        }
+
+        // JWT 발급
+        const token = jwt.sign(
+            { uid: user.uid, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.json({
+            token,
+            user: {
+                uid: user.uid,
+                nickname: user.nickname,
+                email: user.email
+            }
+        });
+
+    } catch (error) {
+        console.error("Login Error:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+
 /* 🚀 서버 실행 */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
