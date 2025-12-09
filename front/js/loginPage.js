@@ -1,37 +1,63 @@
 const loginForm = document.getElementById('loginForm');
-        const errorMessage = document.getElementById('errorMessage');
+const errorMessage = document.getElementById('errorMessage');
 
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+const API_URL = "http://localhost:3000";
 
-            // 간단한 유효성 검사 (실제로는 서버에서 처리)
-            if (email && password) {
-                // 로그인 성공 시뮬레이션
-                console.log('로그인 시도:', { email, password });
-                // 실제로는 서버로 요청을 보내고 응답을 처리
-                // window.location.href = 'index.html';
-                alert('로그인 성공! (데모)');
-            } else {
-                errorMessage.classList.add('show');
-                setTimeout(() => {
-                    errorMessage.classList.remove('show');
-                }, 3000);
-            }
+// 에러 출력 함수
+function showError(message) {
+    errorMessage.innerText = message;
+    errorMessage.classList.add('show');
+    setTimeout(() => errorMessage.classList.remove('show'), 3000);
+}
+
+loginForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!email || !password) {
+        showError("이메일과 비밀번호를 입력하세요.");
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
         });
 
-        function socialLogin(provider) {
-            console.log(`${provider} 로그인 시도`);
-            alert(`${provider} 소셜 로그인 (데모)`);
+        const data = await res.json();
+
+        // HTTP 상태 코드 기반 분기
+        if (res.status === 404) {
+            showError("존재하지 않는 이메일입니다.");
+            return;
+        }
+        if (res.status === 401) {
+            showError("비밀번호가 올바르지 않습니다.");
+            return;
+        }
+        if (!res.ok) {
+            showError("서버 오류가 발생했습니다. 잠시 후 다시 시도하세요.");
+            return;
         }
 
-        // 입력 시 에러 메시지 숨기기
-        document.getElementById('email').addEventListener('input', function() {
-            errorMessage.classList.remove('show');
-        });
+        // ⭐ 로그인 성공 → 토큰 저장
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("uid", data.user.uid);
+        localStorage.setItem("nickname", data.user.nickname);
 
-        document.getElementById('password').addEventListener('input', function() {
-            errorMessage.classList.remove('show');
-        });
+        alert("로그인 성공!");
+        window.location.href = "index.html";
+
+    } catch (error) {
+        console.error(error);
+        showError("네트워크 오류가 발생했습니다.");
+    }
+});
+
+// 입력 시 에러 메시지 숨기기
+document.getElementById('email').addEventListener('input', () => errorMessage.classList.remove('show'));
+document.getElementById('password').addEventListener('input', () => errorMessage.classList.remove('show'));
