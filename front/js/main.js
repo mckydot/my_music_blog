@@ -63,6 +63,7 @@ document.addEventListener('click', function (event) {
 // 🔓 로그아웃 기능
 document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logoutBtn");
+    const nickname = localStorage.getItem("nickname");
     if (!logoutBtn) return;
 
     logoutBtn.addEventListener("click", () => {
@@ -73,4 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("로그아웃 되었습니다.");
         window.location.href = "login.html";
     });
+
+    const profileNameElement = document.querySelector(".profile-name");
+    if (nickname && profileNameElement) {
+        profileNameElement.textContent = nickname;
+    }
 });
