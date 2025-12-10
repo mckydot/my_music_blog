@@ -22,7 +22,7 @@ function validatePassword(password) {
 
 /* 📝 회원가입 */
 app.post("/register", async (req, res) => {
-  const { name, nickname, email, password, marketing } = req.body; // ⭐ 추가
+  const { name, nickname, email, password, marketing } = req.body;
 
   if (!name || !nickname || !email || !password) {
     return res.status(400).json({ message: "모든 필드를 입력해주세요." });
@@ -46,7 +46,7 @@ app.post("/register", async (req, res) => {
       .input("nickname", sql.NVarChar, nickname)
       .input("email", sql.VarChar, email)
       .input("password", sql.VarChar, hashed)
-      .input("marketing", sql.Bit, marketing) // ⭐ 추가
+      .input("marketing", sql.Bit, marketing)
       .query(`
         INSERT INTO users (uid, name, nickname, email, password, marketing)
         VALUES (@uid, @name, @nickname, @email, @password, @marketing)
@@ -64,15 +64,15 @@ app.post("/register", async (req, res) => {
   }
 });
 
+/* 🔐 로그인 */
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const pool = await connect();  // 🔥 db.connect → connect 로 수정
+        const pool = await connect();
 
-        // 이메일 확인
         const result = await pool.request()
-            .input("email", sql.VarChar, email)  // 🔥 db.sql → sql 로 수정
+            .input("email", sql.VarChar, email)
             .query("SELECT * FROM users WHERE email = @email");
 
         if (result.recordset.length === 0) {
@@ -81,14 +81,12 @@ app.post("/login", async (req, res) => {
 
         const user = result.recordset[0];
 
-        // 비밀번호 확인
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
             return res.status(401).json({ error: "Invalid password" });
         }
 
-        // JWT 발급
         const token = jwt.sign(
             { uid: user.uid, email: user.email },
             process.env.JWT_SECRET,
@@ -110,7 +108,7 @@ app.post("/login", async (req, res) => {
     }
 });
 
-//토큰 인증 기능
+/* 🔐 토큰 인증 */
 app.get("/verify-token", (req, res) => {
     const token = req.headers.authorization?.split(" ")[1];
 
@@ -123,6 +121,29 @@ app.get("/verify-token", (req, res) => {
         return res.json({ valid: true, user: decoded });
     } catch (err) {
         return res.status(401).json({ valid: false, error: "Invalid token" });
+    }
+});
+
+
+/* ============================
+   🎵 iTunes 검색 API
+============================ */
+app.get("/search", async (req, res) => {
+    const query = req.query.q;
+
+    if (!query) return res.status(400).json({ error: "Query is required" });
+
+    try {
+        const response = await fetch(
+            `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=musicTrack&limit=10`
+        );
+
+        const json = await response.json();
+        res.json(json);
+
+    } catch (err) {
+        console.error("iTunes Search Error:", err);
+        res.status(500).json({ error: "iTunes API error" });
     }
 });
 
