@@ -63,6 +63,26 @@ async function searchSongs() {
         resultsBox.innerHTML = "<p>오류가 발생했습니다.</p>";
     }
 }
+// 태그 추가 버튼
+document.querySelector(".tag-add-btn").addEventListener("click", addTag);
+
+function addTag() {
+    const input = document.getElementById("tag-input");
+    const tag = input.value.trim().replace("#", "");
+
+    if (!tag) return;
+
+    const box = document.getElementById("tag-list");
+    const newTag = document.createElement("span");
+    newTag.className = "tag-item";
+    newTag.textContent = "#" + tag;
+
+    newTag.addEventListener("click", () => newTag.remove());
+
+    box.appendChild(newTag);
+
+    input.value = "";
+}
 
 
 // 🎨 검색 결과 렌더링
@@ -118,6 +138,61 @@ function removeSelectedSong() {
     selected.innerHTML = `<p class="placeholder">🔎 노래를 검색해서 선택하세요.</p>`;
 }
 
+// ==========================
+// 📝 게시물 저장 기능
+// ==========================
+document.querySelector(".submit-btn").addEventListener("click", savePost);
+
+async function savePost() {
+    const token = localStorage.getItem("token");
+    const uid = localStorage.getItem("uid");
+
+    // 선택된 노래 정보 가져오기
+    const selectedCard = document.querySelector("#selected-song .chosen");
+    if (!selectedCard) return alert("노래를 선택해주세요!");
+
+    const title = selectedCard.querySelector(".chosen-title").textContent;
+    const artist = selectedCard.querySelector(".chosen-artist").textContent;
+
+    // 리뷰 내용
+    const content = document.getElementById("content").value.trim();
+    if (!content) return alert("내용을 입력해주세요.");
+
+    // 태그 수집
+    const tags = Array.from(document.querySelectorAll("#tag-list .tag-item"))
+                      .map(t => t.textContent.replace("#", "").trim());
+
+    try {
+        const res = await fetch(`${API_URL}/posts`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                uid,
+                title,
+                artist,
+                content,
+                tags
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            console.error(data);
+            return alert("게시물 저장 실패");
+        }
+
+        alert("게시물이 저장되었습니다.");
+        window.location.href = "index.html";
+
+    } catch (err) {
+        console.error("Save Error:", err);
+        alert("서버 오류 발생");
+    }
+}
 
 // ==========================
 // 👤 닉네임 / 로그아웃

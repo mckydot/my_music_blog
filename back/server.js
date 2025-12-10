@@ -147,6 +147,55 @@ app.get("/search", async (req, res) => {
     }
 });
 
+/* ============================
+   📝 게시물 저장 API
+============================ */
+app.post("/posts", async (req, res) => {
+    const { uid, title, artist, content, tags } = req.body;
+
+    if (!uid || !title || !content) {
+        return res.status(400).json({ message: "필수 값 누락" });
+    }
+
+    try {
+        const pool = await connect();
+
+        // 1) posts 테이블 저장
+        const insertPost = await pool.request()
+            .input("uid", sql.VarChar, uid)
+            .input("title", sql.NVarChar, title)
+            .input("artist", sql.NVarChar, artist)
+            .input("content", sql.NVarChar, content)
+            .query(`
+                INSERT INTO posts (author_uid, title, artist, content)
+                VALUES (@uid, @title, @artist, @content);
+
+                SELECT SCOPE_IDENTITY() AS post_id;
+            `);
+
+        const postId = insertPost.recordset[0].post_id;
+
+        // 2) 태그 저장 (post_tags)
+        if (tags && Array.isArray(tags)) {
+            for (const tag of tags) {
+                await pool.request()
+                    .input("post_id", sql.Int, postId)
+                    .input("tag", sql.NVarChar, tag)
+                    .query(`
+                        INSERT INTO post_tags (post_id, tag)
+                        VALUES (@post_id, @tag)
+                    `);
+            }
+        }
+
+        res.json({ message: "게시물 저장 성공", postId });
+
+    } catch (err) {
+        console.error("Post Insert Error:", err);
+        res.status(500).json({ message: "서버 오류" });
+    }
+});
+
 
 /* 🚀 서버 실행 */
 const PORT = process.env.PORT || 3000;
