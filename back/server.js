@@ -250,6 +250,47 @@ app.get("/posts", async (req, res) => {
   }
 });
 
+// ✨ 내 게시물 불러오기 API
+app.get("/my-posts", async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) return res.status(401).json({ error: "Token missing" });
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const uid = decoded.uid;
+
+        const pool = await connect();
+        const result = await pool.request()
+            .input("author_uid", sql.NVarChar, uid)
+            .query(`
+                SELECT 
+    p.id, 
+    p.title, 
+    p.artist, 
+    p.thumbnail,
+    p.content, 
+    p.created_at,
+    (SELECT STRING_AGG(tag, ',') FROM post_tags WHERE post_id = p.id) AS tags
+FROM posts p
+WHERE p.author_uid = @author_uid
+ORDER BY p.created_at DESC
+
+            `);
+
+        const posts = result.recordset.map(post => ({
+            ...post,
+            tags: post.tags ? post.tags.split(",") : []
+        }));
+
+        res.json(posts);
+
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({ error: "Invalid token" });
+    }
+});
+
 
 /* =========================================================
    🚀 서버 실행
