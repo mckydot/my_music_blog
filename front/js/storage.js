@@ -84,24 +84,25 @@ document.addEventListener("DOMContentLoaded", () => {
 // ✨ 게시물 불러오기
 async function loadPosts() {
     try {
-        const res = await fetch(`${API_URL}/my-posts`, {
+        const res = await fetch(`${API_URL}/posts`, {
+            method: "GET",
             headers: {
-                "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
 
-        const data = await res.json();
+        if (!res.ok) {
+            console.error("게시물 불러오기 오류:", await res.text());
+            return;
+        }
 
-        // 🚨 배열이 아닐 경우 대비
-        const posts = Array.isArray(data) ? data : [];
+        const posts = await res.json();
+        console.log("📌 불러온 게시물:", posts);
 
-        // ❌ 더 이상 필터링 필요 없음
         renderPosts(posts);
 
     } catch (err) {
         console.error("게시물 로딩 실패:", err);
-        renderPosts([]); 
     }
 }
 
