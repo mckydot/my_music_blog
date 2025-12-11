@@ -80,3 +80,55 @@ document.addEventListener("DOMContentLoaded", () => {
         profileNameElement.textContent = nickname;
     }
 });
+
+// ✨ 게시물 불러오기
+async function loadPosts() {
+    try {
+        const res = await fetch(`${API_URL}/posts`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        if (!res.ok) {
+            console.error("게시물 불러오기 오류:", await res.text());
+            return;
+        }
+
+        const posts = await res.json();
+        console.log("📌 불러온 게시물:", posts);
+
+        renderPosts(posts);
+
+    } catch (err) {
+        console.error("게시물 로딩 실패:", err);
+    }
+}
+
+// ✨ 카드 렌더링 함수
+function renderPosts(posts) {
+    const grid = document.getElementById("postGrid");
+    grid.innerHTML = ""; // 초기화
+
+    posts.forEach(post => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        card.innerHTML = `
+            <div class="thumb" style="background-image:url('${post.thumbnail || "https://via.placeholder.com/200"}');"></div>
+            <div class="info">
+                <p class="title card-title">${post.title}</p>
+                <p class="artist">${post.artist || "알 수 없음"}</p>
+                <p class="preview card-desc">${post.content.slice(0, 80)}...</p>
+                <div class="tags">
+                    ${post.tags.map(t => `<span>#${t}</span>`).join("")}
+                </div>
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+}
+
+loadPosts();
