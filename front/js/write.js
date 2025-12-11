@@ -63,7 +63,10 @@ async function searchSongs() {
         resultsBox.innerHTML = "<p>오류가 발생했습니다.</p>";
     }
 }
-// 태그 추가 버튼
+
+// ==========================
+// 🔖 태그 추가
+// ==========================
 document.querySelector(".tag-add-btn").addEventListener("click", addTag);
 
 function addTag() {
@@ -80,12 +83,13 @@ function addTag() {
     newTag.addEventListener("click", () => newTag.remove());
 
     box.appendChild(newTag);
-
     input.value = "";
 }
 
 
+// ==========================
 // 🎨 검색 결과 렌더링
+// ==========================
 function renderSearchResults(items) {
     const resultsBox = document.getElementById("search-results");
     resultsBox.innerHTML = "";
@@ -106,6 +110,7 @@ function renderSearchResults(items) {
             </div>
         `;
 
+        // 선택 시 선택된 곡 저장
         card.addEventListener("click", () => selectSong(image, title, artist));
 
         resultsBox.appendChild(card);
@@ -114,9 +119,17 @@ function renderSearchResults(items) {
 
 
 // ==========================
-// 🎵 선택된 노래 UI
+// 🎵 선택된 노래 UI + LocalStorage 저장
 // ==========================
 function selectSong(img, title, artist) {
+
+    // localStorage에 선택된 곡 저장
+    localStorage.setItem("selectedSong", JSON.stringify({
+        image: img,
+        title: title,
+        artist: artist
+    }));
+
     const selected = document.getElementById("selected-song");
 
     selected.innerHTML = `
@@ -136,7 +149,9 @@ function selectSong(img, title, artist) {
 function removeSelectedSong() {
     const selected = document.getElementById("selected-song");
     selected.innerHTML = `<p class="placeholder">🔎 노래를 검색해서 선택하세요.</p>`;
+    localStorage.removeItem("selectedSong");
 }
+
 
 // ==========================
 // 📝 게시물 저장 기능
@@ -147,20 +162,20 @@ async function savePost() {
     const token = localStorage.getItem("token");
     const uid = localStorage.getItem("uid");
 
-    // 선택된 노래 정보 가져오기
-    const selectedCard = document.querySelector("#selected-song .chosen");
-    if (!selectedCard) return alert("노래를 선택해주세요!");
+    // 🔥 localStorage 에 저장된 선택 곡 가져오기
+    const song = JSON.parse(localStorage.getItem("selectedSong"));
+    if (!song) return alert("노래를 선택해주세요!");
 
-    const title = selectedCard.querySelector(".chosen-title").textContent;
-    const artist = selectedCard.querySelector(".chosen-artist").textContent;
+    const thumbnail = song.image;
+    const title = song.title;
+    const artist = song.artist;
 
-    // 리뷰 내용
     const content = document.getElementById("content").value.trim();
     if (!content) return alert("내용을 입력해주세요.");
 
-    // 태그 수집
+    // 태그 모으기
     const tags = Array.from(document.querySelectorAll("#tag-list .tag-item"))
-                      .map(t => t.textContent.replace("#", "").trim());
+        .map(t => t.textContent.replace("#", "").trim());
 
     try {
         const res = await fetch(`${API_URL}/posts`, {
@@ -173,6 +188,7 @@ async function savePost() {
                 uid,
                 title,
                 artist,
+                thumbnail,   // 🎉 추가됨!!!
                 content,
                 tags
             })
@@ -193,6 +209,7 @@ async function savePost() {
         alert("서버 오류 발생");
     }
 }
+
 
 // ==========================
 // 👤 닉네임 / 로그아웃
