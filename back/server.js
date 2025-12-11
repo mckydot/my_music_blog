@@ -16,7 +16,6 @@ function validatePassword(password) {
   const lengthOK = password.length >= 8;
   const digitOK = /[0-9]/.test(password);
   const specialOK = /[^a-zA-Z0-9]/.test(password);
-
   return lengthOK && digitOK && specialOK;
 }
 
@@ -124,13 +123,11 @@ app.get("/verify-token", (req, res) => {
     }
 });
 
-
 /* ============================
    🎵 iTunes 검색 API
 ============================ */
 app.get("/search", async (req, res) => {
     const query = req.query.q;
-
     if (!query) return res.status(400).json({ error: "Query is required" });
 
     try {
@@ -160,7 +157,6 @@ app.post("/posts", async (req, res) => {
     try {
         const pool = await connect();
 
-        // 1) posts 테이블 저장
         const insertPost = await pool.request()
             .input("uid", sql.VarChar, uid)
             .input("title", sql.NVarChar, title)
@@ -175,7 +171,6 @@ app.post("/posts", async (req, res) => {
 
         const postId = insertPost.recordset[0].post_id;
 
-        // 2) 태그 저장 (post_tags)
         if (tags && Array.isArray(tags)) {
             for (const tag of tags) {
                 await pool.request()
@@ -192,6 +187,53 @@ app.post("/posts", async (req, res) => {
 
     } catch (err) {
         console.error("Post Insert Error:", err);
+        res.status(500).json({ message: "서버 오류" });
+    }
+});
+
+
+/* ============================
+   🟦 게시물 조회 API (추가됨)
+============================ */
+app.get("/posts", async (req, res) => {
+    try {
+        const pool = await connect();
+
+        const posts = await pool.request().query(`
+            SELECT 
+                p.id,
+                p.title,
+                p.artist,
+                p.content,
+                p.created_at,
+                u.nickname AS author,
+                (
+                    SELECT tag
+                    FROM post_tags t
+                    WHERE t.post_id = p.id
+                    FOR JSON PATH
+                ) AS tags
+            FROM posts p
+            JOIN users u ON p.author_uid = u.uid
+            ORDER BY p.id DESC
+        `);
+
+        const formatted = posts.recordset.map(p => {
+            return {
+                id: p.id,
+                title: p.title,
+                artist: p.artist,
+                content: p.content,
+                author: p.author,
+                created_at: p.created_at,
+                tags: p.tags ? JSON.parse(p.tags).map(t => t.tag) : []
+            };
+        });
+
+        res.json(formatted);
+
+    } catch (err) {
+        console.error("Post Read Error:", err);
         res.status(500).json({ message: "서버 오류" });
     }
 });
