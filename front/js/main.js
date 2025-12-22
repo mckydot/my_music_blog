@@ -74,6 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("로그아웃 되었습니다.");
         window.location.href = "login.html";
     });
+    myPage.addEventListener("click", ()=>{
+        window.location.href = "mypage.html";
+    })
+
+
 
     const profileNameElement = document.querySelector(".profile-name");
     if (nickname && profileNameElement) {

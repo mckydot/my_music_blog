@@ -286,6 +286,7 @@ body {
     padding: 16px;
     display: flex;
     flex-direction: column;
+    height: 100%; /* 카드 내부 정렬 기준 */
 }
 
 .title {
@@ -316,15 +317,24 @@ body {
 
 .tags {
     margin-top: auto;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;      /* ✅ 태그 최대 2줄 */
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;           /* 넘치면 잘라버림 */
 }
+
 
 .tags span {
     display: inline-block;
     padding: 4px 10px;
     font-size: 12px;
-    margin-right: 6px;
+    margin: 0 6px 6px 0;
     background: #eef1ff;
     border-radius: 12px;
+
+    white-space: nowrap; /* 태그 내부 줄바꿈 방지 */
 }
 
 .preview {
