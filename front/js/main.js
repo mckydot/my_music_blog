@@ -109,7 +109,7 @@ async function loadPosts() {
         renderPosts([]); 
     }
 }
-
+const likeButton = document.getElementById("likeButton");
 // ✨ 카드 렌더링 함수
 function renderPosts(posts) {
     const grid = document.getElementById("postGrid");
@@ -137,14 +137,17 @@ function renderPosts(posts) {
 }
 
 loadPosts();
-
+let currentPostId = null;
 function openPostModal(post) {
+    currentPostId = post.id;
+
     document.getElementById("modalThumb").style.backgroundImage =
         `url('${post.thumbnail || "https://via.placeholder.com/400"}')`;
 
     document.getElementById("modalTitle").textContent = post.title;
     document.getElementById("modalArtist").textContent = post.artist || "";
     document.getElementById("modalContent").textContent = post.content;
+    document.getElementById("likeCount").textContent = post.likes_count;
 
     const tagBox = document.getElementById("modalTags");
     tagBox.innerHTML = post.tags.map(t => `<span>#${t}</span>`).join("");
@@ -155,3 +158,32 @@ function openPostModal(post) {
 function closePostModal() {
     document.getElementById("postModal").classList.add("hidden");
 }
+
+async function clickLikeBtn() {
+    if (!currentPostId) return;
+
+    try {
+        const res = await fetch(`${API_URL}/posts/${currentPostId}/like`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await res.json();
+
+        const likeBtn = document.getElementById("likeButton");
+        likeBtn.classList.toggle("active", data.liked);
+
+        // 좋아요 수 UI 즉시 반영
+        const countEl = document.getElementById("likeCount");
+        let count = parseInt(countEl.textContent);
+        countEl.textContent = data.liked ? count + 1 : count - 1;
+
+    } catch (err) {
+        console.error("Like Error:", err);
+        alert("좋아요 처리 실패");
+    }
+}
+document.getElementById("likeButton").addEventListener("click", clickLikeBtn);

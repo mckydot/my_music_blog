@@ -464,49 +464,65 @@ body {
     background: #f6f7fb;
 }
 /* =========================
-   ❤️ 좋아요 / 공유 버튼
+   ❤️ / 🔗 액션 버튼 영역 (최종)
 ========================= */
 
 .modal-actions {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 14px;
 }
 
-.icon-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+/* 공통 pill 버튼 */
+.action-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    height: 36px;
+    padding: 0 14px;
+
+    border-radius: 999px;
     border: none;
-    background: #f6f7fb;
+    background: #f3f4f6;
+
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+
     cursor: pointer;
-    position: relative;
     transition: background 0.2s ease, transform 0.15s ease;
 }
 
-.icon-btn:hover {
+.action-pill:hover {
+    background: #e5e7eb;
+    transform: scale(1.04);
+}
+
+/* 아이콘 정렬 */
+.action-pill svg,
+.action-pill .icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+/* 좋아요 활성화 */
+.like-btn.active {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* 공유 버튼 (pill 유지, 색상만 다르게) */
+.share-btn {
+    background: #f6f7fb;
+}
+
+.share-btn:hover {
     background: #eef1ff;
-    transform: scale(1.05);
 }
 
-/* ❤️ 좋아요 아이콘 */
-.like-btn::before {
-    content: "❤";
-    font-size: 18px;
-    color: #666;
-}
-
-/* 🔗 공유 아이콘 */
-.share-btn::before {
-    content: "↗";
-    font-size: 18px;
-    color: #666;
-}
-
-/* 활성화 대비용 (나중에 JS로 토글 가능) */
-.like-btn.active::before {
-    color: #e11d48;
-}
 
 /* =========================
    💬 댓글 영역
