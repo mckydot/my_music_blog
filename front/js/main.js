@@ -74,6 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("로그아웃 되었습니다.");
         window.location.href = "login.html";
     });
+    myPage.addEventListener("click", ()=>{
+        window.location.href = "mypage.html";
+    })
+
+
 
     const profileNameElement = document.querySelector(".profile-name");
     if (nickname && profileNameElement) {
@@ -127,7 +132,26 @@ function renderPosts(posts) {
         `;
 
         grid.appendChild(card);
+        card.addEventListener("click", () => openPostModal(post));
     });
 }
 
 loadPosts();
+
+function openPostModal(post) {
+    document.getElementById("modalThumb").style.backgroundImage =
+        `url('${post.thumbnail || "https://via.placeholder.com/400"}')`;
+
+    document.getElementById("modalTitle").textContent = post.title;
+    document.getElementById("modalArtist").textContent = post.artist || "";
+    document.getElementById("modalContent").textContent = post.content;
+
+    const tagBox = document.getElementById("modalTags");
+    tagBox.innerHTML = post.tags.map(t => `<span>#${t}</span>`).join("");
+
+    document.getElementById("postModal").classList.remove("hidden");
+}
+
+function closePostModal() {
+    document.getElementById("postModal").classList.add("hidden");
+}

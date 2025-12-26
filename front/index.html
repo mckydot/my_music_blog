@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,7 +26,7 @@
                     <span class="arrow">▼</span>
                 </div>
                 <div class="dropdown" id="profileDropdown">
-                    <a href="#" class="dropdown-item">마이페이지</a>
+                    <a href="#" id="myPage" class="dropdown-item">마이페이지</a>
                     <a href="#" id="logoutBtn" class="dropdown-item">로그아웃</a>
                 </div>
             </div>
@@ -44,11 +45,13 @@
                 <h3 class="sidebar-title">관심 아티스트</h3>
                 <ul class="artist-list">
                     <li class="artist-item active">
-                        <img src="https://i.scdn.co/image/ab67616d0000b273d9e3b5a1b2eacae4ed52a4d6" alt="IU" class="artist-thumb">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273d9e3b5a1b2eacae4ed52a4d6" alt="IU"
+                            class="artist-thumb">
                         <span class="artist-name">Metallica</span>
                     </li>
                     <li class="artist-item">
-                        <img src="https://i.scdn.co/image/ab67616d0000b2738a4fb52ffb0a2c1e090d1dcb" alt="NewJeans" class="artist-thumb">
+                        <img src="https://i.scdn.co/image/ab67616d0000b2738a4fb52ffb0a2c1e090d1dcb" alt="NewJeans"
+                            class="artist-thumb">
                         <span class="artist-name">Scorpions</span>
                     </li>
                     <li class="artist-item">
@@ -87,6 +90,59 @@
 
     </div>
 
+    <!-- 📌 게시물 상세 팝업 -->
+    <div id="postModal" class="modal-overlay hidden">
+        <div class="modal">
+            <button class="modal-close" onclick="closePostModal()">✕</button>
+
+            <div class="modal-body">
+                <!-- 왼쪽: 앨범 -->
+                <div class="modal-thumb" id="modalThumb"></div>
+
+                <!-- 오른쪽: 콘텐츠 -->
+                <div class="modal-content">
+                    <h2 id="modalTitle"></h2>
+                    <p class="modal-artist" id="modalArtist"></p>
+
+                    <div class="modal-actions">
+                        <button class="icon-btn like-btn"></button>
+                        <button class="icon-btn share-btn"></button>
+                    </div>
+
+                    <p class="modal-text" id="modalContent"></p>
+
+                    <div class="modal-tags" id="modalTags"></div>
+
+                    <!-- 💬 댓글 UI (디자인만) -->
+                    <div class="comment-section">
+                        <h4>댓글</h4>
+
+                        <!-- 댓글 목록 -->
+                        <div class="comment-list">
+                            <div class="comment-item">
+                                <strong>user1</strong>
+                                <span>이 노래 진짜 명곡…</span>
+                            </div>
+                            <div class="comment-item">
+                                <strong>user2</strong>
+                                <span>운동할 때 들으면 최고</span>
+                            </div>
+                        </div>
+
+                        <!-- 댓글 입력 -->
+                        <div class="comment-input-wrapper">
+                            <input type="text" placeholder="댓글을 입력하세요…" />
+                            <button class="comment-send-btn" title="전송">➤</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/main.js"></script>
 </body>
+
 </html>
