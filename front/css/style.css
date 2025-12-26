@@ -348,3 +348,247 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+/* =========================
+   📌 게시물 상세 모달
+========================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal {
+    background: #fff;
+    width: 900px;
+    max-width: 95%;
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    height: 520px;
+}
+
+.modal-thumb {
+    width: 45%;
+    aspect-ratio: 1 / 1;          /* ✅ 정사각형 */
+    background-size: contain;     /* ✅ 잘림 방지 */
+    background-position: center;
+    background-repeat: no-repeat; /* ✅ 여백 처리 */
+    background-color: #f6f7fb;    /* 빈 공간용 */
+    border-radius: 16px 0 0 16px;
+}
+
+.modal-content {
+    width: 55%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content h2 {
+    margin: 0 0 6px;
+}
+
+.modal-artist {
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.action-btn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #eef1ff;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.modal-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #444;
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 12px;
+}
+
+.modal-tags span {
+    display: inline-block;
+    margin: 0 6px 6px 0;
+    padding: 4px 10px;
+    font-size: 12px;
+    background: #eef1ff;
+    border-radius: 12px;
+}
+
+
+.comment-section {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+}
+
+.comment-section input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #f6f7fb;
+}
+/* =========================
+   ❤️ 좋아요 / 공유 버튼
+========================= */
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #f6f7fb;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.icon-btn:hover {
+    background: #eef1ff;
+    transform: scale(1.05);
+}
+
+/* ❤️ 좋아요 아이콘 */
+.like-btn::before {
+    content: "❤";
+    font-size: 18px;
+    color: #666;
+}
+
+/* 🔗 공유 아이콘 */
+.share-btn::before {
+    content: "↗";
+    font-size: 18px;
+    color: #666;
+}
+
+/* 활성화 대비용 (나중에 JS로 토글 가능) */
+.like-btn.active::before {
+    color: #e11d48;
+}
+
+/* =========================
+   💬 댓글 영역
+========================= */
+
+.comment-section {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+}
+
+.comment-section h4 {
+    margin: 0 0 8px;
+    font-size: 14px;
+}
+
+.comment-list {
+    max-height: 120px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding-right: 4px;
+}
+
+.comment-item {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.comment-item strong {
+    margin-right: 6px;
+    color: #222;
+}
+
+.comment-section input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #f6f7fb;
+    font-size: 13px;
+}
+/* =========================
+   💬 댓글 입력 영역
+========================= */
+
+.comment-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 입력창 */
+.comment-input-wrapper input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background: #f6f7fb;
+    font-size: 13px;
+
+    box-sizing: border-box;
+}
+
+/* 전송 버튼 */
+.comment-send-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+
+    background: #6366f1; /* 포인트 컬러 */
+    color: #fff;
+    font-size: 16px;
+
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.comment-send-btn:hover {
+    background: #4f46e5;
+    transform: scale(1.05);
+}
