@@ -105,9 +105,21 @@
                     <p class="modal-artist" id="modalArtist"></p>
 
                     <div class="modal-actions">
-                        <button class="icon-btn like-btn"></button>
-                        <button class="icon-btn share-btn"></button>
+                        <button class="action-pill like-btn" id="likeButton">
+                            <span class="icon">❤</span>
+                            <span class="count" id="likeCount">0</span>
+                        </button>
+
+                        <button class="action-pill share-btn" title="공유">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path
+                                    d="M18 8a3 3 0 1 0-2.83-4H15a3 3 0 0 0 0 6h.17A3 3 0 0 0 18 8ZM6 14a3 3 0 1 0 2.83 4H9a3 3 0 0 0 0-6h-.17A3 3 0 0 0 6 14Zm12-2a3 3 0 0 0-2.83 2H9.83a3 3 0 0 0-5.66 0H4a3 3 0 0 0 0 2h.17a3 3 0 0 0 5.66 0h5.34A3 3 0 1 0 18 12Z"
+                                    fill="currentColor" />
+                            </svg>
+                        </button>
                     </div>
+
+
 
                     <p class="modal-text" id="modalContent"></p>
 

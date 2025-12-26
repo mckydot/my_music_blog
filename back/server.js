@@ -217,6 +217,7 @@ app.get("/posts", async (req, res) => {
           p.thumbnail,
           p.content,
           p.created_at,
+          p.likes_count,
           u.nickname AS author,
           (
             SELECT tag
@@ -271,6 +272,7 @@ app.get("/my-posts", async (req, res) => {
     p.thumbnail,
     p.content, 
     p.created_at,
+    p.likes_count,
     (SELECT STRING_AGG(tag, ',') FROM post_tags WHERE post_id = p.id) AS tags
 FROM posts p
 WHERE p.author_uid = @author_uid
@@ -289,6 +291,77 @@ ORDER BY p.created_at DESC
         console.error(err);
         return res.status(401).json({ error: "Invalid token" });
     }
+});
+app.post("/posts/:id/like", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  const postId = Number(req.params.id);
+
+  if (!token) {
+    return res.status(401).json({ message: "Token missing" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const uid = decoded.uid;
+
+    const pool = await connect();
+    const transaction = new sql.Transaction(pool);
+
+    await transaction.begin();
+
+    try {
+      const request = new sql.Request(transaction);
+
+      // 🔍 좋아요 여부 확인
+      const check = await request
+        .input("post_id", sql.Int, postId)
+        .input("user_uid", sql.VarChar(36), uid)
+        .query(`
+          SELECT 1 FROM post_likes
+          WHERE post_id = @post_id AND user_uid = @user_uid
+        `);
+
+      if (check.recordset.length === 0) {
+        // 👍 좋아요 추가
+        await request.query(`
+          INSERT INTO post_likes (post_id, user_uid)
+          VALUES (@post_id, @user_uid)
+        `);
+
+        await request.query(`
+          UPDATE posts
+          SET likes_count = likes_count + 1
+          WHERE id = @post_id
+        `);
+
+        await transaction.commit();
+        return res.json({ liked: true });
+      } else {
+        // 💔 좋아요 취소
+        await request.query(`
+          DELETE FROM post_likes
+          WHERE post_id = @post_id AND user_uid = @user_uid
+        `);
+
+        await request.query(`
+          UPDATE posts
+          SET likes_count = likes_count - 1
+          WHERE id = @post_id AND likes_count > 0
+        `);
+
+        await transaction.commit();
+        return res.json({ liked: false });
+      }
+
+    } catch (err) {
+      await transaction.rollback();
+      throw err;
+    }
+
+  } catch (err) {
+    console.error("🔥 Like Error:", err);
+    return res.status(500).json({ message: "서버 오류" });
+  }
 });
 
 
